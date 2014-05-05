@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Custom Element</title>
+  <script src="weakmap-shim.js"></script>
+  <!-- subset of http://www.polymer-project.org/platform.js -->
+  <script src="ce.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/mootools/1.4.5/mootools-yui-compressed.js"></script>
+</head>
+<body>
+
+  <script src="custom-element.js"></script>
+
+    <custom-element name="kenta-foo">
+      <template>foo</template>
+      <script>
+        document.register.tag('kenta-foo', {
+          options: true,
+          ready: function(){
+            console.log('ready', this)
+          },
+          created: function(){
+            console.log('created', this)
+          },
+          test: function(){
+            console.log('test!')
+          }
+        })
+      </script>
+      <style>
+      kenta-foo {
+        display: block;
+        color:red;
+      }
+      </style>
+    </custom-element>
+
+    <kenta-foo id=test></kenta-foo>
+<script>
+onload = function(){
+  console.log(document.body.getWindow === undefined) // MUST BE FALSE!
+  document.getElementById('test').test()
+}
+</script>
+  </body>
+</html>

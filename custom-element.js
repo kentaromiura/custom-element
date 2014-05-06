@@ -64,6 +64,11 @@
 
   }
 
+  var injectionPoint = document.head || document.body || document.documentElement || document.createElement('html')
+  var temp = document.createElement('section');
+  temp.innerHTML = '<style>template{display:none!important}/*Added by custom-element*/</style>'
+  injectionPoint.appendChild(temp.firstChild)
+  temp = null
   document.register('custom-element', {
     prototype: proto
   })

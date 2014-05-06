@@ -56,7 +56,7 @@
           options = customElements[name].options
         }
         customElements[name] = {
-          content: template.content || document.createDocumentFragment()
+          content: 'content' in template? template.content : template
         }
         if(options){
           document.register.tag(name, options)

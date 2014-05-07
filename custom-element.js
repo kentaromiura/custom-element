@@ -33,7 +33,7 @@
 
       proto.createdCallback = function(){
         for(var i = 0, max = template.childNodes.length; i < max; i++){
-          this.appendChild(template.childNodes[i].cloneNode())
+          this.appendChild(template.childNodes[i].cloneNode(true))
         }
         ready.call(this)
       }

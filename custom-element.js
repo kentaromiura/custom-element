@@ -6,7 +6,18 @@
         return new f()
       },
       has = (has = Object.prototype.hasOwnProperty, has.call.bind(has)),
-      nop = function(){}
+      nop = function(){},
+			collect = function(from, collected){
+				if(document.querySelectorAll) return document.querySelectorAll('[data-id]', from)
+				collected = collected || []
+				if('getAttribute' in from && from.getAttribute('data-id')){
+						collected.push(from)
+				}
+				for(var i=0, max = from.childNodes.length; i<max; i++){
+					collect(from.childNodes[i], collected)
+				}
+				return collected
+			}
 
   document.register.tag = function(name, options){
 
@@ -32,9 +43,17 @@
         }
 
       proto.createdCallback = function(){
-        for(var i = 0, max = template.childNodes.length; i < max; i++){
+				var i, max;
+				this.$ = {}
+        for(i = 0, max = template.childNodes.length; i < max; i++){
           this.appendChild(template.childNodes[i].cloneNode(true))
         }
+				var shortcuts = collect(this)
+				console.log('shortcuts', shortcuts)
+				for(i = 0, max = shortcuts.length; i < max; i++){
+					var shortcut = shortcuts[i]
+					this.$[shortcut.getAttribute('data-id')] = shortcut
+				}
         ready.call(this)
       }
 

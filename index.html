@@ -13,12 +13,18 @@
   <script src="custom-element.js"></script>
 
     <custom-element name="kenta-foo">
-      <template>foo</template>
+      <template>foo
+      <span><div data-id="test1">this is for testing deep clonenode</div></span>
+      <span data-id="test2"></span>
+      </template>
       <script>
         document.register.tag('kenta-foo', {
           options: true,
           ready: function(){
             console.log('ready', this)
+            //testing the $ shortcuts
+            console.log(this.$.test1.innerHTML)
+            this.$.test2.innerHTML = "test"
           },
           created: function(){
             console.log('created', this)

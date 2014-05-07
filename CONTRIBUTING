@@ -1,0 +1,30 @@
+How to contribute
+================= 
+
+Contributions are welcome!
+if(Found an issue){
+  if(You know the solution){
+    Make a Pull Request
+  } else {
+    Just fill a github issue (https://github.com/kentaromiura/custom-element/issues/new)
+  }
+
+How to pull request:
+Just clone the project.
+
+git clone git@github.com:kentaromiura/custom-element.git
+
+navigate to the new directory
+cd custom-element
+
+create a branch
+git checkout -b (bug|feature)-(description|issue number)
+
+make your changes
+...
+
+then push to your local branch
+git push origin master
+
+then go to your github page and click make a pull request!
+

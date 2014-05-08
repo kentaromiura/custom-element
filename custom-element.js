@@ -1,4 +1,6 @@
 (function(){
+  if (!document.register) document.register = document.registerElement
+
   var customElements = {},
       create = Object.create || function(proto){
         var f = function(){}

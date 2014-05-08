@@ -42,12 +42,19 @@
       </style>
     </custom-element>
 
+    <custom-element name="kenta-simple" noscript>
+      <template>
+        <b> Simple element </b>
+      </template>
+    </custom-element>
+
     <kenta-foo id=test></kenta-foo>
-<script>
-onload = function(){
-  console.log(document.body.getWindow === undefined) // MUST BE FALSE!
-  document.getElementById('test').test()
-}
-</script>
+    <kenta-simple></kenta-simple>
+    <script>
+    onload = function(){
+      console.log(document.body.getWindow === undefined) // MUST BE FALSE!
+      document.getElementById('test').test()
+    }
+    </script>
   </body>
 </html>

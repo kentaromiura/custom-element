@@ -70,6 +70,7 @@
   proto.createdCallback = function(){
     var template = this.getElementsByTagName('template')[0],
         name = this.getAttribute('name'),
+        noscript = this.getAttribute('noscript') != null,
         options
 
         if (customElements[name] && customElements[name].options){
@@ -78,8 +79,8 @@
         customElements[name] = {
           content: 'content' in template? template.content : template
         }
-        if (options){
-          document.register.tag(name, options)
+        if (options || noscript){
+          document.register.tag(name, noscript ? {} : options)
         }
 
   }

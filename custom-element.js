@@ -1,4 +1,4 @@
-(function(){
+(function(global){
   if (!document.register) document.register = document.registerElement
 
   var customElements = {},
@@ -30,22 +30,24 @@
       }
       return;
     }
+
     var xtends = customElements[name].xtends,
+        ctor = customElements[name].ctor,
         proto = xtends? create(document.createElement(xtends).constructor.prototype) : create(HTMLElement.prototype),
         created = options.created || nop,
         ready = options.ready || nop,
         template = customElements[name].content
 
-        delete options.created;
-        delete options.ready;
+    delete options.created;
+    delete options.ready;
 
-        for (var any in options){
-          if (has(options, any)){
-            proto[any] = options[any]
-          }
-        }
+    for (var any in options){
+      if (has(options, any)){
+        proto[any] = options[any]
+      }
+    }
 
-      proto.createdCallback = function(){
+    proto.createdCallback = function(){
         var i, max;
         this.$ = {}
         for (i = 0, max = template.childNodes.length; i < max; i++){
@@ -58,11 +60,14 @@
           this.$[shortcut.getAttribute('data-id')] = shortcut
         }
         ready.call(this)
-      }
+    }
 
     var registered = document.register(name, {
       prototype : proto
     })
+    if (ctor){
+      global[ctor] = registered
+    }
     created.call(registered)
   }
 
@@ -72,19 +77,21 @@
     var template = this.getElementsByTagName('template')[0],
         name = this.getAttribute('name'),
         xtends = this.getAttribute('extends'),
+        ctor = this.getAttribute('constructor'),
         noscript = this.getAttribute('noscript') != null,
         options
 
-        if (customElements[name] && customElements[name].options){
-          options = customElements[name].options
-        }
-        customElements[name] = {
-          content: 'content' in template? template.content : template,
-          xtends: xtends
-        }
-        if (options || noscript){
-          document.register.tag(name, noscript ? {} : options)
-        }
+    if (customElements[name] && customElements[name].options){
+      options = customElements[name].options
+    }
+    customElements[name] = {
+      content: 'content' in template? template.content : template,
+      xtends: xtends,
+      ctor: ctor
+    }
+    if (options || noscript){
+      document.register.tag(name, noscript ? {} : options)
+    }
 
   }
 
@@ -96,4 +103,4 @@
   document.register('custom-element', {
     prototype: proto
   })
-})()
+})(this)

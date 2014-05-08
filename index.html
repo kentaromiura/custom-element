@@ -12,7 +12,7 @@
 
   <script src="custom-element.js"></script>
 
-    <custom-element name="kenta-foo">
+    <custom-element name="kenta-foo" constructor="fooHTMLElement">
       <template>foo
       <span><div data-id="test1">this is for testing deep clonenode</div></span>
       <span data-id="test2"></span>
@@ -61,6 +61,7 @@
       console.log(document.body.getWindow === undefined) // MUST BE FALSE!
       document.getElementById('test').test()
       document.getElementById('extend').test()
+      console.log(fooHTMLElement === document.getElementById('test').constructor)
     }
     </script>
   </body>

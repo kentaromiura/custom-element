@@ -23,8 +23,8 @@
           ready: function(){
             console.log('ready', this)
             //testing the $ shortcuts
-            console.log(this.$.test1.innerHTML)
-            this.$.test2.innerHTML = "test"
+            if (this.$.test1) console.log(this.$.test1.innerHTML)
+            if (this.$.test2) this.$.test2.innerHTML = "test"
           },
           created: function(){
             console.log('created', this)
@@ -47,13 +47,20 @@
         <b> Simple element </b>
       </template>
     </custom-element>
+    <custom-element noscript name="kenta-inherits" extends="kenta-foo">
+    <template>
+      this is an extended element.
+    </template>
+    </custom-element>
 
     <kenta-foo id=test></kenta-foo>
     <kenta-simple></kenta-simple>
+    <kenta-inherits id=extend></kenta-inherits>
     <script>
     onload = function(){
       console.log(document.body.getWindow === undefined) // MUST BE FALSE!
       document.getElementById('test').test()
+      document.getElementById('extend').test()
     }
     </script>
   </body>

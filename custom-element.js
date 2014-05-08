@@ -30,7 +30,8 @@
       }
       return;
     }
-    var proto = create(HTMLElement.prototype),
+    var xtends = customElements[name].xtends,
+        proto = xtends? create(document.createElement(xtends).constructor.prototype) : create(HTMLElement.prototype),
         created = options.created || nop,
         ready = options.ready || nop,
         template = customElements[name].content
@@ -70,6 +71,7 @@
   proto.createdCallback = function(){
     var template = this.getElementsByTagName('template')[0],
         name = this.getAttribute('name'),
+        xtends = this.getAttribute('extends'),
         noscript = this.getAttribute('noscript') != null,
         options
 
@@ -77,7 +79,8 @@
           options = customElements[name].options
         }
         customElements[name] = {
-          content: 'content' in template? template.content : template
+          content: 'content' in template? template.content : template,
+          xtends: xtends
         }
         if (options || noscript){
           document.register.tag(name, noscript ? {} : options)

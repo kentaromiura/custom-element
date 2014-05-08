@@ -13,8 +13,8 @@
         if ('getAttribute' in from && from.getAttribute('data-id')){
           collected.push(from)
         }
-        for (var i = 0, max = from.childNodes.length; i<max; i++){
-          collect(from.childNodes[i], collected)
+        for (var i = 0, max = from.children.length; i<max; i++){
+          collect(from.children[i], collected)
         }
         return collected
       }

@@ -22,7 +22,7 @@
           options: true,
           ready: function(){
             console.log('ready', this)
-            //testing the $ shortcuts
+            //testing the $ shortcuts, the if is for the extended elements
             if (this.$.test1) console.log(this.$.test1.innerHTML)
             if (this.$.test2) this.$.test2.innerHTML = "test"
           },
@@ -42,7 +42,7 @@
       </style>
     </custom-element>
 
-    <custom-element name="kenta-simple" noscript>
+    <custom-element name="kenta-simple" noscript attributes="test">
       <template>
         <b> Simple element </b>
       </template>
@@ -54,14 +54,23 @@
     </custom-element>
 
     <kenta-foo id=test></kenta-foo>
-    <kenta-simple></kenta-simple>
+    <kenta-simple id=attributetest></kenta-simple>
     <kenta-inherits id=extend></kenta-inherits>
     <script>
     onload = function(){
-      console.log(document.body.getWindow === undefined) // MUST BE FALSE!
+      console.log('should be false:', document.body.getWindow === undefined) // MUST BE FALSE!
+      console.log('should console.log "test!":')
       document.getElementById('test').test()
+      console.log('should console.log "test!":')
       document.getElementById('extend').test()
-      console.log(fooHTMLElement === document.getElementById('test').constructor)
+      console.log('should be true:', fooHTMLElement === document.getElementById('test').constructor)
+      var attribute_test = document.getElementById('attributetest')
+      //since there's no default it will be 'null'
+      console.log('should be true:', attribute_test.getAttribute('test') === 'null')
+      console.log('should be true:', attribute_test.test === 'null')
+      //set to something else
+      attribute_test.test = 'something else'
+      console.log('should be true:', attribute_test.test === attribute_test.getAttribute('test') && attribute_test.test === 'something else')
     }
     </script>
   </body>

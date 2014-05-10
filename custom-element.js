@@ -36,10 +36,24 @@
         proto = xtends? create(document.createElement(xtends).constructor.prototype) : create(HTMLElement.prototype),
         created = options.created || nop,
         ready = options.ready || nop,
-        template = customElements[name].content
+        onAttributeChange = options.attributeChangedCallback || nop,
+        attributes = customElements[name].attributes.split(' '),
+        template = customElements[name].content,
+        descriptor = function(attribute){
+          return {
+              enumerable: true,
+              get: function(){
+                return this.getAttribute(attribute)
+              },
+              set: function(value){
+                this.setAttribute(attribute, value)
+              }
+            }
+        }
 
-    delete options.created;
-    delete options.ready;
+    delete options.created
+    delete options.ready
+    delete options.attributeChangedCallback
 
     for (var any in options){
       if (has(options, any)){
@@ -47,8 +61,24 @@
       }
     }
 
+    proto.attributeChangedCallback = function(attributeName, oldValue, newValue){
+      if (oldValue === null && ~(' ' + attributes.join(' ') + ' ').indexOf(' ' + attributeName + ' ')) return
+      (this[attributeName+ 'Changed'] || nop)(oldValue, newValue) // implemented the {attributeName}Changed event
+      onAttributeChange.apply(this, arguments)
+    }
+
     proto.createdCallback = function(){
+
         var i, max;
+
+        for (i = 0, max = attributes.length; i < max; i++){
+          var any = attributes[i]
+          if(any != ''){
+            if(this.getAttribute(any) === null) this.setAttribute(any, proto[any] || null)
+            Object.defineProperty(this, any, descriptor(any))
+          }
+        }
+
         this.$ = {}
         for (i = 0, max = template.childNodes.length; i < max; i++){
           this.appendChild(template.childNodes[i].cloneNode(true))
@@ -59,6 +89,7 @@
           var shortcut = shortcuts[i]
           this.$[shortcut.getAttribute('data-id')] = shortcut
         }
+
         ready.call(this)
     }
 
@@ -78,16 +109,19 @@
         name = this.getAttribute('name'),
         xtends = this.getAttribute('extends'),
         ctor = this.getAttribute('constructor'),
+        attributes = this.getAttribute('attributes'),
         noscript = this.getAttribute('noscript') != null,
         options
 
     if (customElements[name] && customElements[name].options){
       options = customElements[name].options
     }
+
     customElements[name] = {
       content: 'content' in template? template.content : template,
       xtends: xtends,
-      ctor: ctor
+      ctor: ctor,
+      attributes: attributes || ''
     }
     if (options || noscript){
       document.register.tag(name, noscript ? {} : options)

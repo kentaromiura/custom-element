@@ -49,13 +49,14 @@
     </custom-element>
     <custom-element noscript name="kenta-inherits" extends="kenta-foo">
     <template>
+      <content></content>
       this is an extended element.
     </template>
     </custom-element>
 
     <kenta-foo id=test></kenta-foo>
-    <kenta-simple id=attributetest></kenta-simple>
-    <kenta-inherits id=extend></kenta-inherits>
+    <kenta-simple id=attributetest><div style="border:1px solid red;">kenta-simple BOTTOM CONTENT</div></kenta-simple>
+    <kenta-inherits id=extend><div style="border:1px solid lime;">kenta-inherits HEADER CONTENT</div></kenta-inherits>
     <script>
     onload = function(){
       console.log('should be false:', document.body.getWindow === undefined) // MUST BE FALSE!

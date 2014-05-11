@@ -21,6 +21,7 @@
         return collected
       }
 
+
   document.register.tag = function(name, options){
 
     options = options || {}
@@ -69,7 +70,7 @@
 
     proto.createdCallback = function(){
 
-        var i, max;
+        var i, max, section
 
         for (i = 0, max = attributes.length; i < max; i++){
           var any = attributes[i]
@@ -80,8 +81,19 @@
         }
 
         this.$ = {}
+
+        var fragment = document.createDocumentFragment()
+        while (this.firstChild){
+          fragment.appendChild(this.firstChild)
+        }
         for (i = 0, max = template.childNodes.length; i < max; i++){
           this.appendChild(template.childNodes[i].cloneNode(true))
+        }
+        var content = this.getElementsByTagName('content')[0]
+        if (content){
+          content.parentNode.replaceChild(fragment, content)
+        } else {
+          this.appendChild(fragment)
         }
         var shortcuts = collect(this)
 

@@ -70,7 +70,7 @@
 
     proto.createdCallback = function(){
 
-        var i, max, section
+        var i, max
 
         for (i = 0, max = attributes.length; i < max; i++){
           var any = attributes[i]

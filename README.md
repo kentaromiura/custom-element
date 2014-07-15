@@ -5,7 +5,7 @@ Native declarative way to create a custom webcomponent
 
 Since [Polymer shadowdom polyfill](https://github.com/Polymer/ShadowDOM) causes some issues with other libraries (notable with MooTools) I decided to create this clone of the `polymer-element` element that doesn't use the shadow dom part.
 
-`custom-element` follows a native approach so it's not dependant on any framework to work, so any component built with it will work with both Polymer or X-Tag but it can also be used as standalone just by including only a [Custom Elements](http://w3c.github.io/webcomponents/spec/custom/) polyfill like the [Polymer one](https://github.com/Polymer/CustomElements), and it will work natively in browsers which supports the `document.registerElement` method such as [Google Chrome Canary](https://www.google.co.uk/intl/en/chrome/browser/canary.html)
+`custom-element` follows a native approach so it's not dependant on any framework to work, so any component built with it will work with both Polymer or X-Tag but it can also be used as standalone just by including only a [Custom Elements](http://w3c.github.io/webcomponents/spec/custom/) polyfill like the [Polymer one](https://github.com/Polymer/CustomElements) or [@WebReflection one](http://github.com/WebReflection/document-register-element) , and it will work natively in browsers which supports the `document.registerElement` method such as [Google Chrome Canary](https://www.google.co.uk/intl/en/chrome/browser/canary.html)
 
 
 What's similar to polymer-element

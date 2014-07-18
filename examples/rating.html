@@ -1,0 +1,88 @@
+<html>
+	<head>
+		<title>Rating with custom-element</title>
+		<script src="../tests/webreflection/document.register.element.js"></script>
+		<script src="../custom-element.js"></script>
+	</head>
+	<body>
+		 <custom-element name="kenta-rating">
+     <style type="text/css">
+        kenta-rating {
+            display: block;
+            white-space: nowrap;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+        }
+        .kenta-rating-star {
+            display: inline-block;
+            vertical-align: middle;
+            width: 24px;
+            height: 24px;
+            margin: 0 5px;
+            background-size: 100% 100%;
+        background-image: url('https://raw.githubusercontent.com/PolymerLabs/polymer-ui-ratings/master/assets/ic_star_rate_darkalt.png'); /*borrowed from Polymer*/
+            cursor: pointer;
+        }
+        .kenta-rating-star.kenta-rating-full {
+        background-image: url('https://raw.githubusercontent.com/PolymerLabs/polymer-ui-ratings/master/assets/ic_star_rate_darkreg.png');  /*borrowed from Polymer*/
+        }
+    </style>
+    <template>
+        <section class="kenta-rating" data-id="container"></section>
+        <span data-id="star"></span>
+        <content />
+    </template>
+    <script>
+        (function(){
+            var setStyles = function(){
+                var me = this,
+                    classnames = {
+                        empty: 'kenta-rating-star',
+                        full: 'kenta-rating-star kenta-rating-full'
+                    },
+                    star
+
+                for (var i = 0, max = me.count; i < max; i++) {
+                    star = me.$.container.childNodes[i]
+                        if (star.getAttribute('data-index') <= me.value) {
+                            star.setAttribute('class', classnames.full)
+                        } else {
+                            star.setAttribute('class', classnames.empty)
+                        }
+                }
+            },
+            attachEvents = function(){
+                var me = this
+                me.$.container.onclick = function(e) {
+                    var index = e.target.getAttribute('data-index')
+                    if (index !== null){
+                        me.value = index
+                        setStyles.call(me)
+                    }
+                }
+            }
+
+        document.register.tag('kenta-rating', {
+            ready: function() {
+                var me = this,
+                    starTemplate = me.$.star,
+                    star
+                    starTemplate.parentNode.removeChild(starTemplate)
+
+                    for (var i = 0, max = me.count; i < max; i++) {
+                        star = starTemplate.cloneNode()
+                        star.setAttribute('data-index', i)
+                        me.$.container.appendChild(star)
+                    }
+                    attachEvents.call(me)
+                    setStyles.call(me)
+            },
+            count: 5,
+            value: 0
+        });
+        })()
+    </script>
+</custom-element>
+<kenta-rating></kenta-rating>
+	</body>
+</html>

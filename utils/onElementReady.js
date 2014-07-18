@@ -5,14 +5,15 @@
   var unknownProto = getProto(temp.firstChild);
   temp = null;
 
-  document.onElementReady = function(element, callback){
-      console.log(element, getProto(element))
-      if (getProto(element) != unknownProto){
+  document.onElementReady = function(element, callback, checkInterval){
+      checkInterval = checkInterval || 100
+      var poll = function(){
+        if (getProto(element) != unknownProto){
           callback.call(element)
-      } else {
-          element.addEventListener('created', function(){
-              callback.call(element);
-          })
+        } else {
+          setTimeout(poll, checkInterval)
+        }
       }
+      poll()
   }
 })()

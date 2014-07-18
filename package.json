@@ -1,0 +1,28 @@
+{
+  "name": "custom-element",
+  "version": "0.0.2",
+  "description": "Native declarative way to create a custom webcomponent",
+  "main": "custom-element.js",
+  "directories": {
+    "example": "examples",
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kentaromiura/custom-element.git"
+  },
+  "keywords": [
+    "web-component",
+    "web-components",
+    "custom-element"
+  ],
+  "author": "Cristian Carlesso <@kentaromiura> (http://github.com/kentaromiura)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kentaromiura/custom-element/issues"
+  },
+  "homepage": "https://github.com/kentaromiura/custom-element"
+}

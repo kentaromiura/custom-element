@@ -1,0 +1,21 @@
+{
+  "name": "custom-element",
+  "main": "custom-element.js",
+  "version": "0.0.2",
+  "homepage": "https://github.com/kentaromiura/custom-element",
+  "authors": [
+    "kentaromiura <kentaromiura@gmail.com>"
+  ],
+  "description": "Native declarative way to create a custom webcomponent",
+  "keywords": [
+    "web-components"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

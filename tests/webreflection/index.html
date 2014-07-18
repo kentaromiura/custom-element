@@ -55,12 +55,11 @@
     <kenta-simple id=attributetest><div style="border:1px solid red;">kenta-simple BOTTOM CONTENT</div></kenta-simple>
     <kenta-inherits id=extend><div style="border:1px solid lime;">kenta-inherits HEADER CONTENT</div></kenta-inherits>
     <script>
-    onload = function(){
       document.onElementReady(document.getElementById('test'), function(){
         console.log('test is ready')
         console.log('should console.log "test!":')
         this.test()
-        console.log('should be true:', window.fooHTMLElement === this.constructor)
+        console.log('should be true:', window.fooHTMLElement === this.constructor) // THIS IS FALSE IN SAFARI
       })
       document.onElementReady(document.getElementById('extend'), function(){
         console.log('extend is ready')
@@ -76,7 +75,6 @@
         this.test = 'something else'
         console.log('should be true:', this.test === this.getAttribute('test') && this.test === 'something else')
       })
-    }
     </script>
   </body>
 </html>

@@ -3,76 +3,12 @@
 <head>
   <meta charset="utf-8">
   <title>Custom Element</title>
-  <script src="weakmap-shim.js"></script>
-  <!-- subset of http://www.polymer-project.org/platform.js -->
-  <script src="ce.js"></script>
-  <script src="//ajax.googleapis.com/ajax/libs/mootools/1.4.5/mootools-yui-compressed.js"></script>
 </head>
 <body>
-
-  <script src="custom-element.js"></script>
-
-    <custom-element name="kenta-foo" constructor="fooHTMLElement">
-      <template>foo
-      <span><div data-id="test1">this is for testing deep clonenode</div></span>
-      <span data-id="test2"></span>
-      </template>
-      <script>
-        document.register.tag('kenta-foo', {
-          options: true,
-          ready: function(){
-            console.log('ready', this)
-            //testing the $ shortcuts, the if is for the extended elements
-            if (this.$.test1) console.log(this.$.test1.innerHTML)
-            if (this.$.test2) this.$.test2.innerHTML = "test"
-          },
-          created: function(){
-            console.log('created', this)
-          },
-          test: function(){
-            console.log('test!')
-          }
-        })
-      </script>
-      <style>
-      kenta-foo {
-        display: block;
-        color:red;
-      }
-      </style>
-    </custom-element>
-
-    <custom-element name="kenta-simple" noscript attributes="test">
-      <template>
-        <b> Simple element </b>
-      </template>
-    </custom-element>
-    <custom-element noscript name="kenta-inherits" extends="kenta-foo">
-    <template>
-      <content></content>
-      this is an extended element.
-    </template>
-    </custom-element>
-
-    <kenta-foo id=test></kenta-foo>
-    <kenta-simple id=attributetest><div style="border:1px solid red;">kenta-simple BOTTOM CONTENT</div></kenta-simple>
-    <kenta-inherits id=extend><div style="border:1px solid lime;">kenta-inherits HEADER CONTENT</div></kenta-inherits>
-    <script>
-    onload = function(){
-      console.log('should be false:', document.body.getWindow === undefined) // MUST BE FALSE!
-      console.log('should console.log "test!":')
-      document.getElementById('test').test()
-      console.log('should console.log "test!":')
-      document.getElementById('extend').test()
-      console.log('should be true:', fooHTMLElement === document.getElementById('test').constructor)
-      var attribute_test = document.getElementById('attributetest')
-      //since there's no default it will be 'null'
-      console.log('should be true:', attribute_test.getAttribute('test') === 'null')
-      console.log('should be true:', attribute_test.test === 'null')
-      //set to something else
-      attribute_test.test = 'something else'
-      console.log('should be true:', attribute_test.test === attribute_test.getAttribute('test') && attribute_test.test === 'something else')
-    }
-    </script>
-  </body>
+  <a href="tests/polymer/index.html">Test with Polymer polyfill</a><br />
+  <a href="tests/polymer/mootools/index.html">Test with Polymer polyfill for MooTools friendlyness</a>
+  <hr />
+  <a href="tests/webreflection/index.html">Test with Andrea polyfill</a><br />
+  <a href="tests/webreflection/mootools/index.html">Test with Andrea polyfill for MooTools friendlyness</a>
+</body>
 </html>

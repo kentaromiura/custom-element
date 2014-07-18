@@ -1,5 +1,4 @@
-
-    var WeakMap = WeakMap || function(){
+var WeakMap = WeakMap || function(){
   /*!(C) WebReflection - Mit Style !*/
   // WARNING: DO NOT FORGET TO DELETE KEYS WHEN POSSIBLE
   //          MEMORY GREEDY, UNSAFE, BROKEN SHIM

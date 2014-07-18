@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Custom Element</title>
+  <script src="../../utils/Function.prototype.bind.js"></script>
+	<script src="document.register.element.js"></script>
+	<script src="../../custom-element.js"></script>
+  <script src="../../utils/onElementReady.js"></script>
+</head>
+<body>
+    <custom-element name="kenta-foo" constructor="fooHTMLElement">
+      <template>foo
+      <span><div data-id="test1">this is for testing deep clonenode</div></span>
+      <span data-id="test2"></span>
+      </template>
+      <script>
+        document.register.tag('kenta-foo', {
+          options: true,
+          ready: function(){
+            console.log('ready', this)
+            //testing the $ shortcuts, the if is for the extended elements
+            if (this.$.test1) console.log(this.$.test1.innerHTML)
+            if (this.$.test2) this.$.test2.innerHTML = "test"
+          },
+          created: function(){
+            console.log('created', this)
+          },
+          test: function(){
+            console.log('test!')
+          }
+        })
+      </script>
+      <style>
+      kenta-foo {
+        display: block;
+        color:red;
+      }
+      </style>
+    </custom-element>
+
+    <custom-element name="kenta-simple" noscript attributes="test">
+      <template>
+        <b> Simple element </b>
+      </template>
+    </custom-element>
+    <custom-element noscript name="kenta-inherits" extends="kenta-foo">
+    <template>
+      <content></content>
+      this is an extended element.
+    </template>
+    </custom-element>
+
+    <kenta-foo id=test></kenta-foo>
+    <kenta-simple id=attributetest><div style="border:1px solid red;">kenta-simple BOTTOM CONTENT</div></kenta-simple>
+    <kenta-inherits id=extend><div style="border:1px solid lime;">kenta-inherits HEADER CONTENT</div></kenta-inherits>
+    <script>
+      document.onElementReady(document.getElementById('test'), function(){
+        console.log('test is ready')
+        console.log('should console.log "test!":')
+        this.test()
+        console.log('should be true:', window.fooHTMLElement === this.constructor) // THIS IS FALSE IN SAFARI
+      })
+      document.onElementReady(document.getElementById('extend'), function(){
+        console.log('extend is ready')
+        console.log('should console.log "test!":')
+        this.test()
+      })
+      document.onElementReady(document.getElementById('attributetest'), function(){
+        console.log('attributetest is ready')
+        //since there's no default it will be 'null'
+        console.log('should be true:', this.getAttribute('test') === 'null')
+        console.log('should be true:', this.test === 'null')
+        //set to something else
+        this.test = 'something else'
+        console.log('should be true:', this.test === this.getAttribute('test') && this.test === 'something else')
+      })
+    </script>
+  </body>
+</html>

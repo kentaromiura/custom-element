@@ -1,0 +1,13 @@
+<html>
+<head>
+<script src="../weakmap-shim.js"></script>
+<script src="../ce.js"></script>
+<script src="../../../custom-element.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/mootools/1.4.5/mootools-yui-compressed.js"></script>
+<script id="TEST">
+onload = function(){
+  console.log('should be false:', document.body.getWindow === undefined) // MUST BE FALSE!
+}
+</script>
+</head>
+</html>

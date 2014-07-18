@@ -1,5 +1,5 @@
 {
-  "name": "custom-element",
+  "name": "declarative-custom-element",
   "version": "0.0.2",
   "description": "Native declarative way to create a custom webcomponent",
   "main": "custom-element.js",

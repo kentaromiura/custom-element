@@ -19,8 +19,8 @@
           collect(from.children[i], collected)
         }
         return collected
-      }
-
+      },
+      getProto = Object.getPrototypeOf || function(o){ return o.constructor.prototype }
 
   document.register.tag = function(name, options){
 
@@ -34,7 +34,7 @@
 
     var xtends = customElements[name].xtends,
         ctor = customElements[name].ctor,
-        proto = xtends? create(document.createElement(xtends).constructor.prototype) : create(HTMLElement.prototype),
+        proto = xtends? create(getProto(document.createElement(xtends))) : create(HTMLElement.prototype),
         created = options.created || nop,
         ready = options.ready || nop,
         onAttributeChange = options.attributeChangedCallback || nop,

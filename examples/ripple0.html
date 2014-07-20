@@ -318,8 +318,8 @@ Apply `circle` class to make the rippling effect within a circle.
         var width = this.$.canvas.width / 2; // Retina canvas
         var height = this.$.canvas.height / 2;
         var rect = this.getBoundingClientRect();
-        var touchX = e.x - rect.left;
-        var touchY = e.y - rect.top;
+        var touchX = (e.x || e.clientX) - rect.left;
+        var touchY = (e.y || e.clientY) - rect.top;
 
         wave.startPosition = {x:touchX, y:touchY};
 
